@@ -57,6 +57,20 @@ public class Motorcycle extends Vehicle {
         '}';
   }
 
+  @Override
+  public Motorcycle copy() {
+    return new Motorcycle.Builder()
+        .setId(this.getId())
+        .setModel(this.getModel())
+        .setColor(this.getColor())
+        .setPrice(this.getPrice())
+        .setKilometers(this.getKilometers())
+        .setUsed(this.getUsed())
+        .setEngineCapacity(this.engineCapacity)
+        .setFuelCapacity(this.fuelCapacity)
+        .build();
+  }
+
   public static class Builder {
     private int id;
     private String model;
@@ -118,6 +132,5 @@ public class Motorcycle extends Vehicle {
           this.engineCapacity,
           this.fuelCapacity);
     }
-
   }
 }

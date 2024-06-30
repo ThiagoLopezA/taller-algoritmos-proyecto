@@ -91,4 +91,6 @@ public abstract class Vehicle extends BaseEntity {
         '}';
   }
 
+  @Override
+  public abstract Vehicle copy();
 }

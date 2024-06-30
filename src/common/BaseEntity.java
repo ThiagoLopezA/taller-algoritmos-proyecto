@@ -21,4 +21,8 @@ public class BaseEntity {
   public boolean isEqual(BaseEntity entity) {
     return this.id == entity.getId();
   }
+
+  public BaseEntity copy() {
+    return new BaseEntity(this.getId());
+  }
 }

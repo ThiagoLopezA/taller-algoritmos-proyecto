@@ -89,6 +89,22 @@ public class Car extends Vehicle {
         '}';
   }
 
+  @Override
+  public Car copy() {
+    return new Car.Builder()
+        .setId(this.getId())
+        .setModel(this.getModel())
+        .setColor(this.getColor())
+        .setPrice(this.getPrice())
+        .setKilometers(this.getKilometers())
+        .setUsed(this.getUsed())
+        .setDoorsQuantity(this.getDoorsQuantity())
+        .setFuelType(this.getFuelType())
+        .setBrand(this.getBrand())
+        .setLicensePlate(this.getLicensePlate())
+        .build();
+  }
+
   public static class Builder {
     private int id;
     private String model;
