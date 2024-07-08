@@ -1,6 +1,6 @@
-package src.structures;
+package src.shared.structures;
 
-import src.common.BaseEntity;
+import src.shared.utils.BaseEntity;
 
 public class CircularLinkedList<T extends BaseEntity> {
   Node<T> head = null;

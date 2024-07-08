@@ -1,111 +1,63 @@
 package src.main;
 
-import src.models.Car;
-import src.models.FuelType;
-import src.models.Motorcycle;
+import src.database.Repository;
+import src.database.storages.LinkedListStorage;
 import src.models.Vehicle;
-import src.repositories.Repository;
-import src.structures.CircularLinkedList;
-import src.structures.LinkedList;
+import src.views.Menu;
+import src.views.VehicleCreator;
+import src.views.VehicleDeleter;
+import src.views.VehicleList;
+import src.views.VehicleUpdater;
+import src.views.Revert;
+import src.views.SortVisualizer;
+import src.views.TestDataGenerator;
 
 public class Main {
   public static void main(String[] args) {
     try {
-      // <-- Main task -->
-      // Repository<Vehicle> vehicleStore = new Repository<Vehicle>();
 
-      // Motorcycle motorcycle = new Motorcycle.Builder()
-      // .setId(1)
-      // .setModel("Ninja 300")
-      // .setColor("Green")
-      // .setPrice(5000)
-      // .setKilometers(2500.5f)
-      // .setUsed(true)
-      // .setEngineCapacity(300)
-      // .setFuelCapacity(100)
-      // .build();
+      LinkedListStorage<Vehicle> storage = new LinkedListStorage<Vehicle>();
+      Repository<Vehicle, LinkedListStorage<Vehicle>> repository = new Repository<Vehicle, LinkedListStorage<Vehicle>>(
+          storage);
 
-      // Car car = new Car.Builder()
-      // .setId(2)
-      // .setModel("Civic")
-      // .setColor("Red")
-      // .setPrice(20000)
-      // .setKilometers(0)
-      // .setUsed(false)
-      // .setDoorsQuantity(4)
-      // .setFuelType(FuelType.GASOLINE)
-      // .setBrand("Honda")
-      // .setLicensePlate("ABC-1234")
-      // .build();
+      VehicleCreator<Vehicle, LinkedListStorage<Vehicle>> vehicleCreatorView = new VehicleCreator<>(repository);
+      VehicleList<Vehicle, LinkedListStorage<Vehicle>> vehicleListView = new VehicleList<>(repository);
+      VehicleUpdater<Vehicle, LinkedListStorage<Vehicle>> vehicleUpdaterView = new VehicleUpdater<>(repository);
+      Revert<Vehicle, LinkedListStorage<Vehicle>> vehicleRevertView = new Revert<>(repository);
+      VehicleDeleter<Vehicle, LinkedListStorage<Vehicle>> vehicleDeleterView = new VehicleDeleter<>(repository);
+      TestDataGenerator<Vehicle, LinkedListStorage<Vehicle>> testDataGeneratorView = new TestDataGenerator<>(
+          repository);
+      SortVisualizer<Vehicle, LinkedListStorage<Vehicle>> sortVisualizerView = new SortVisualizer<>(repository);
 
-      // vehicleStore.save(motorcycle);
-      // vehicleStore.save(car);
+      while (true) {
+        Integer userChoice = Menu.show();
 
-      // car.setBrand("Civil modified");
-
-      // vehicleStore.update(car.getId(), car);
-
-      // System.out.println("\nFirst printAll");
-      // vehicleStore.printAll();
-
-      // vehicleStore.delete(car);
-
-      // System.out.println("\nSecond printAll");
-      // vehicleStore.printAll();
-
-      // <-- Testing new feats -->
-
-      CircularLinkedList<Vehicle> cllDatabase = new CircularLinkedList<Vehicle>();
-      LinkedList<Vehicle> llDatabase = new LinkedList<Vehicle>();
-
-      Motorcycle motorcycle = new Motorcycle.Builder()
-          .setId(1)
-          .setModel("Ninja 300")
-          .setColor("Green")
-          .setPrice(5000)
-          .setKilometers(2500.5f)
-          .setUsed(true)
-          .setEngineCapacity(300)
-          .setFuelCapacity(100)
-          .build();
-
-      Car car = new Car.Builder()
-          .setId(2)
-          .setModel("Civic")
-          .setColor("Red")
-          .setPrice(20000)
-          .setKilometers(0)
-          .setUsed(false)
-          .setDoorsQuantity(4)
-          .setFuelType(FuelType.GASOLINE)
-          .setBrand("Honda")
-          .setLicensePlate("ABC-1234")
-          .build();
-
-      // // Testing linked-list database
-      // llDatabase.insert(motorcycle);
-      // motorcycle.setColor("blue");
-      // llDatabase.update(motorcycle);
-      // Motorcycle searchResult = (Motorcycle)
-      // llDatabase.searchById(motorcycle.getId());
-      // System.out.println(searchResult.toString());
-      // llDatabase.delete(searchResult);
-      // llDatabase.printAll();
-
-      // System.out.println("\n === \n");
-      // // Testing circular-linked-list database
-      // cllDatabase.insert(car);
-      // cllDatabase.printAll();
-      // car.setBrand("updated brand");
-      // cllDatabase.printAll();
-      // cllDatabase.udpate(car);
-      // cllDatabase.printAll();
-      // Car searchResultCar = (Car) cllDatabase.searchById(car.getId());
-      // System.out.println(searchResultCar.toString());
-      // cllDatabase.delete(car);
-      // cllDatabase.printAll();
-
-      System.out.print(String.valueOf(0));
+        switch (userChoice) {
+          case 1:
+            vehicleCreatorView.show();
+            break;
+          case 2:
+            vehicleListView.show();
+            break;
+          case 3:
+            vehicleUpdaterView.show();
+            break;
+          case 4:
+            vehicleDeleterView.show();
+            break;
+          case 5:
+            sortVisualizerView.show();
+            break;
+          case 6:
+            vehicleRevertView.show();
+            break;
+          case 7:
+            testDataGeneratorView.show();
+            break;
+          case 8:
+            return;
+        }
+      }
 
     } catch (Exception e) {
       e.printStackTrace();

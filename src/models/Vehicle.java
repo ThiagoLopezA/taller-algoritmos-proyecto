@@ -1,7 +1,8 @@
 package src.models;
 
-import src.common.BaseEntity;
-import src.common.Validations;
+import src.shared.utils.BaseEntity;
+import src.shared.validations.NumberValidations;
+import src.shared.validations.StringValidations;
 
 public abstract class Vehicle extends BaseEntity {
   private String model;
@@ -12,6 +13,20 @@ public abstract class Vehicle extends BaseEntity {
 
   public Vehicle() {
     super();
+  }
+
+  public Vehicle(String model, String color, double price, float kilometers, boolean used) {
+    super();
+
+    try {
+      this.setModel(model);
+      this.setColor(color);
+      this.setPrice(price);
+      this.setKilometers(kilometers);
+      this.used = used;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public Vehicle(int id, String model, String color, double price, float kilometers, boolean used) {
@@ -29,7 +44,7 @@ public abstract class Vehicle extends BaseEntity {
   }
 
   public void setModel(String model) throws Exception {
-    Validations.validateString(model);
+    StringValidations.notNullish(model);
     this.model = model;
   }
 
@@ -38,7 +53,7 @@ public abstract class Vehicle extends BaseEntity {
   }
 
   public void setColor(String color) throws Exception {
-    Validations.validateString(color);
+    StringValidations.notNullish(color);
     this.color = color;
   }
 
@@ -47,7 +62,7 @@ public abstract class Vehicle extends BaseEntity {
   }
 
   public void setPrice(double price) throws Exception {
-    Validations.validateNumber(price);
+    NumberValidations.greatherOrEqualThan(price, 0);
     this.price = price;
   }
 
@@ -56,7 +71,7 @@ public abstract class Vehicle extends BaseEntity {
   }
 
   public void setKilometers(float kilometers) throws Exception {
-    Validations.validateNumber(price);
+    NumberValidations.greatherOrEqualThan(price, 0);
     this.kilometers = kilometers;
   }
 
@@ -73,10 +88,10 @@ public abstract class Vehicle extends BaseEntity {
   }
 
   public void validateVehicle() throws Exception {
-    Validations.validateString(this.color);
-    Validations.validateString(this.model);
-    Validations.validateNumber(this.price);
-    Validations.validateNumber(this.kilometers);
+    StringValidations.notNullish(this.color);
+    StringValidations.notNullish(this.model);
+    NumberValidations.greatherOrEqualThan(this.price, 0);
+    NumberValidations.greatherOrEqualThan(this.kilometers, 0);
   }
 
   @Override

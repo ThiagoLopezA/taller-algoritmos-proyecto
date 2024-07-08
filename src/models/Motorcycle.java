@@ -1,12 +1,31 @@
 package src.models;
 
-import src.common.Validations;
+import src.shared.validations.NumberValidations;
 
 public class Motorcycle extends Vehicle {
   private int engineCapacity;
   private float fuelCapacity;
 
   public Motorcycle() {
+  }
+
+  public Motorcycle(
+      String model,
+      String color,
+      double price,
+      float kilometers,
+      boolean used,
+      int engineCapacity,
+      float fuelCapacity) {
+    super(model, color, price, kilometers, used);
+
+    try {
+      this.validateVehicle();
+      this.setFuelCapacity(engineCapacity);
+      this.setEngineCapacity(engineCapacity);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public Motorcycle(
@@ -30,7 +49,7 @@ public class Motorcycle extends Vehicle {
   }
 
   public void setEngineCapacity(int engineCapacity) throws Exception {
-    Validations.validateNumber(engineCapacity);
+    NumberValidations.greatherOrEqualThan(engineCapacity, 0);
     this.engineCapacity = engineCapacity;
   }
 
@@ -39,8 +58,12 @@ public class Motorcycle extends Vehicle {
   }
 
   public void setFuelCapacity(float fuelCapacity) throws Exception {
-    Validations.validateNumber(fuelCapacity);
+    NumberValidations.greatherOrEqualThan(fuelCapacity, 0);
     this.fuelCapacity = fuelCapacity;
+  }
+
+  public float getFuelCapacity() {
+    return this.fuelCapacity;
   }
 
   @Override
@@ -72,7 +95,7 @@ public class Motorcycle extends Vehicle {
   }
 
   public static class Builder {
-    private int id;
+    private Integer id;
     private String model;
     private String color;
     private double price;
@@ -122,6 +145,17 @@ public class Motorcycle extends Vehicle {
     }
 
     public Motorcycle build() {
+      if (id == null) {
+        return new Motorcycle(
+            this.model,
+            this.color,
+            this.price,
+            this.kilometers,
+            this.used,
+            this.engineCapacity,
+            this.fuelCapacity);
+      }
+
       return new Motorcycle(
           this.id,
           this.model,

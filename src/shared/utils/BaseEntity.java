@@ -1,9 +1,10 @@
-package src.common;
+package src.shared.utils;
 
 public class BaseEntity {
   private Integer id;
 
   public BaseEntity() {
+    this.id = IdGenerator.generateRandomId();
   }
 
   public BaseEntity(int id) {
@@ -19,7 +20,7 @@ public class BaseEntity {
   }
 
   public boolean isEqual(BaseEntity entity) {
-    return this.id == entity.getId();
+    return this.id.equals(entity.getId());
   }
 
   public BaseEntity copy() {

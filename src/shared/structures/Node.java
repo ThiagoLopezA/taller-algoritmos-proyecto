@@ -1,8 +1,6 @@
-package src.structures;
+package src.shared.structures;
 
-import src.common.BaseEntity;
-
-public class Node<T extends BaseEntity> {
+public class Node<T> {
   T data;
   Node<T> next;
 

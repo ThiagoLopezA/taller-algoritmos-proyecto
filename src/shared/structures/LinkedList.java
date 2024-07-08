@@ -1,12 +1,12 @@
-package src.structures;
+package src.shared.structures;
 
-import src.common.BaseEntity;
+import src.shared.utils.BaseEntity;
 
 public class LinkedList<T extends BaseEntity> {
   Node<T> head;
 
   @SuppressWarnings("unchecked")
-  public void insert(T data) {
+  public T insert(T data) {
     T copy = (T) data.copy();
     Node<T> newNode = new Node<T>(copy);
 
@@ -21,6 +21,8 @@ public class LinkedList<T extends BaseEntity> {
 
       temp.next = newNode;
     }
+
+    return data;
   }
 
   public void delete(T data) {
@@ -43,13 +45,28 @@ public class LinkedList<T extends BaseEntity> {
     prev.next = temp.next;
   }
 
-  @SuppressWarnings("unchecked")
-  public T searchById(Integer id) {
+  public T update(Integer id, T data) {
     Node<T> temp = this.head;
 
     while (temp != null) {
-      if (temp.data.getId() == id) {
-        return (T) temp.data.copy();
+
+      if (id.equals(temp.data.getId())) {
+        temp.data = data;
+        return temp.data;
+      }
+
+      temp = temp.next;
+    }
+
+    return null;
+  }
+
+  public T getById(Integer id) {
+    Node<T> temp = this.head;
+
+    while (temp != null) {
+      if (id.equals(temp.data.getId())) {
+        return temp.data;
       }
       temp = temp.next;
     }
@@ -57,30 +74,16 @@ public class LinkedList<T extends BaseEntity> {
     return null;
   }
 
-  public boolean update(T data) {
+  public Array<T> getAll() {
     Node<T> temp = this.head;
+    Array<T> results = new Array<>(10);
 
     while (temp != null) {
-      if (temp.data.isEqual(data)) {
-        temp.data = data;
-        return true;
-      }
-
+      results.add(temp.data);
       temp = temp.next;
     }
 
-    return false;
-  }
-
-  public void printAll() {
-    Node<T> temp = this.head;
-
-    while (temp != null) {
-      System.out.print(temp.data + " ");
-      temp = temp.next;
-    }
-
-    System.out.println();
+    return results;
   }
 
 }
